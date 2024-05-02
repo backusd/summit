@@ -365,3 +365,4 @@ FodyWeavers.xsd
 # SUMMIT ---------------------------
 bin/
 bin-int/
+Makefile

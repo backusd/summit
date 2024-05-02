@@ -1,4 +1,4 @@
-workspace "Summit"
+workspace "summit"
 	architecture "x64"
 
 	configurations
@@ -10,10 +10,10 @@ workspace "Summit"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
-startproject "Summit"
+startproject "summit"
 
-project "Summit"
-	location "Summit"
+project "summit"
+	location "summit"
 	kind "ConsoleApp"
 	language "C++"
 	cppdialect "C++latest"
@@ -23,7 +23,7 @@ project "Summit"
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
 	pchheader "pch.h"
-	pchsource "Summit/src/pch.cpp"
+	pchsource "summit/src/pch.cpp"
 
 	files
 	{
