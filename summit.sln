@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Summit", "Summit\Summit.vcxproj", "{E406FED1-D0A8-28A8-B963-3CFCA5A4AFF8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "summit", "summit\summit.vcxproj", "{041BA31C-F0BC-CDF2-D977-E146C5B85443}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -10,12 +10,12 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E406FED1-D0A8-28A8-B963-3CFCA5A4AFF8}.Debug|x64.ActiveCfg = Debug|x64
-		{E406FED1-D0A8-28A8-B963-3CFCA5A4AFF8}.Debug|x64.Build.0 = Debug|x64
-		{E406FED1-D0A8-28A8-B963-3CFCA5A4AFF8}.Dist|x64.ActiveCfg = Dist|x64
-		{E406FED1-D0A8-28A8-B963-3CFCA5A4AFF8}.Dist|x64.Build.0 = Dist|x64
-		{E406FED1-D0A8-28A8-B963-3CFCA5A4AFF8}.Release|x64.ActiveCfg = Release|x64
-		{E406FED1-D0A8-28A8-B963-3CFCA5A4AFF8}.Release|x64.Build.0 = Release|x64
+		{041BA31C-F0BC-CDF2-D977-E146C5B85443}.Debug|x64.ActiveCfg = Debug|x64
+		{041BA31C-F0BC-CDF2-D977-E146C5B85443}.Debug|x64.Build.0 = Debug|x64
+		{041BA31C-F0BC-CDF2-D977-E146C5B85443}.Dist|x64.ActiveCfg = Dist|x64
+		{041BA31C-F0BC-CDF2-D977-E146C5B85443}.Dist|x64.Build.0 = Dist|x64
+		{041BA31C-F0BC-CDF2-D977-E146C5B85443}.Release|x64.ActiveCfg = Release|x64
+		{041BA31C-F0BC-CDF2-D977-E146C5B85443}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

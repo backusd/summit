@@ -46,14 +46,14 @@ project "summit"
 
 		defines
 		{
-			"SUMMMIT_PLATFORM_WINDOWS"
+			"SUMMIT_PLATFORM_WINDOWS"
 		}
 
 	filter "configurations:Debug"
 		defines 
 		{
-			"SUMMMIT_DEBUG",
-			"SUMMMIT_ENABLE_ASSERTS"
+			"SUMMIT_DEBUG",
+			"SUMMIT_ENABLE_ASSERTS"
 		}
 		symbols "on"
 
