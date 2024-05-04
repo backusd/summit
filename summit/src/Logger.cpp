@@ -43,5 +43,15 @@ namespace summit
 		{
 			return std::format("Caught runtime error: {}", e.what());
 		}
+		catch (const std::exception& e)
+		{
+			return std::format("Caught exception: {}", e.what());
+		}
+		catch (...)
+		{
+			return "Caught unknown exception";
+		}
+
+		return "ERROR";
 	}
 }

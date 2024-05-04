@@ -40,7 +40,7 @@ private:
 	Logger& operator=(const Logger&) = delete;
 	Logger& operator=(Logger&&) = delete;
 
-	static std::string CurrentTimeAndDate() noexcept;
+	static ND std::string CurrentTimeAndDate() noexcept;
 
 	template<typename... T>
 	void CoreTraceImpl(std::string_view msg, T... args) noexcept
