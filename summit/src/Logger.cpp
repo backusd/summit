@@ -1,10 +1,6 @@
 #include "pch.h"
 #include "Logger.h"
 
-#ifdef SUMMIT_PLATFORM_WINDOWS
-#include <windows.h>
-#endif
-
 namespace summit
 {
 	Logger::Logger() noexcept

@@ -138,18 +138,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Core.h" />
+    <ClInclude Include="src\Http.h" />
     <ClInclude Include="src\Logger.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\SummitException.h" />
     <ClInclude Include="src\utils\Concepts.h" />
+    <ClInclude Include="src\utils\String.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Http.cpp" />
     <ClCompile Include="src\Logger.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\SummitException.cpp" />
+    <ClCompile Include="src\utils\String.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

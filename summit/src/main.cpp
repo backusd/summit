@@ -1,24 +1,26 @@
 #include "pch.h"
 #include "Logger.h"
 #include "SummitException.h"
+#include "Http.h"
 
 
 
 
 void work()
 {
-	LOG_TRACE("World");
-	LOG_TRACE("Eat some {0}", 69);
-	LOG_INFO("Info {0} {1}", 69, "no thanks");
-	LOG_WARN("Warn {0}", true);
-	LOG_ERROR("Error - you suck");
+//	LOG_TRACE("World");
+//	LOG_TRACE("Eat some {0}", 69);
+//	LOG_INFO("Info {0} {1}", 69, "no thanks");
+//	LOG_WARN("Warn {0}", true);
+//	LOG_ERROR("Error - you suck");
+//
+//	LOG_TRACE("Eat some {0}", 69);
+//	LOG_INFO("Info {0} {1}", 69, "no thanks");
+//	LOG_WARN("Warn {0}", true);
+//	LOG_ERROR("Error - you suck");
 
-	LOG_TRACE("Eat some {0}", 69);
-	LOG_INFO("Info {0} {1}", 69, "no thanks");
-	LOG_WARN("Warn {0}", true);
-	LOG_ERROR("Error - you suck");
-
-	throw summit::SummitExceptionWithData("Cannot divide by 69!", 69);
+	std::string website = summit::Http::Get("http://www.example.com");
+	LOG_INFO("Website: {0}", website);
 
 }
 
