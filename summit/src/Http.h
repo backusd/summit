@@ -30,6 +30,8 @@ public:
 
 #ifdef SUMMIT_PLATFORM_WINDOWS
 	ND inline SOCKET Get() const noexcept { return m_socket; }
+#elif defined SUMMIT_PLATFORM_LINUX
+	inline void Get() const noexcept {}
 #endif
 
 private:
@@ -41,7 +43,7 @@ private:
 	
 
 #ifdef SUMMIT_PLATFORM_WINDOWS
-	SOCKET m_socket;
+	SOCKET m_socket = 0;
 #endif
 };
 

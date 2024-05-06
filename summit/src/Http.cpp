@@ -106,7 +106,7 @@ void PrintAddrInfoDetails(addrinfo* addrInfo) noexcept
 // ==========================================================================================
 // Socket
 Socket::Socket(Socket::Type type, Protocol protocol) :
-    m_socket(0)
+    m_socket{}
 {
 #ifdef SUMMIT_PLATFORM_WINDOWS
     int _af = AF_INET;
