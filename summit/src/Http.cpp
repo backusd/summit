@@ -20,7 +20,13 @@ void PrintAddrInfoDetails(addrinfo* addrInfo) noexcept
     {
         struct sockaddr_in* sockaddr_ipv4 = (struct sockaddr_in*)addrInfo->ai_addr;
         LOG_INFO("\tFamily: AF_INET (IPv4)");
-        LOG_INFO("\tIPv4 address {0}", inet_ntoa(sockaddr_ipv4->sin_addr));
+//        LOG_INFO("\tIPv4 address: {0}", inet_ntoa(sockaddr_ipv4->sin_addr));
+        char buffer[17];
+        const char* result = inet_ntop(AF_INET, &sockaddr_ipv4->sin_addr, buffer, 17);
+        if (result == nullptr)
+            LOG_ERROR("\tIPv4 address: [call to inet_ntop failed. WSAGetLastError = {0}", WSAGetLastError());
+        else
+            LOG_INFO("\tIPv4 address: {0}", result);
         break;
     }
     case AF_INET6:
@@ -99,7 +105,7 @@ void PrintAddrInfoDetails(addrinfo* addrInfo) noexcept
         break;
     }
     LOG_INFO("\tLength of this sockaddr: {0}", addrInfo->ai_addrlen);
-    LOG_INFO("\tCanonical name: {0}", addrInfo->ai_canonname);
+    LOG_INFO("\tCanonical name: {0}", addrInfo->ai_canonname != nullptr ? addrInfo->ai_canonname : "(value is null)");
 }
 #endif
 
@@ -217,6 +223,8 @@ std::string Http::GetImpl(std::string_view url) const
     sockaddr* sockaddr_ipv4 = nullptr;
     for (ptr = addrInfo; ptr != NULL; ptr = ptr->ai_next) 
     {
+        PrintAddrInfoDetails(ptr);
+
         if (ptr->ai_flags != 0)
         {
             LOG_WARN("getaddrinfo returned unexpected response with a non-zero flags value ({0})", ptr->ai_flags);

@@ -46,98 +46,178 @@ private:
 	void CoreTraceImpl(std::string_view msg, T... args) noexcept
 	{
 		if constexpr (sizeof...(T) == 0)
-			std::println("\x1b[37m[TRACE {0}] CORE - {1}", CurrentTimeAndDate(), msg);
+			std::cout << std::format("\x1b[37m[TRACE {0}] CORE - {1}\n", CurrentTimeAndDate(), msg);
 		else
 		{
-			std::print("\x1b[37m[TRACE {0}] CORE - ", CurrentTimeAndDate());
-			std::vprint_nonunicode(std::cout, msg, std::make_format_args(std::forward<T>(args)...));
-			std::println("");
+			std::cout << std::format("\x1b[37m[TRACE {0}] CORE - ", CurrentTimeAndDate())
+				<< std::vformat(msg, std::make_format_args(std::forward<T>(args)...))
+				<< "\n";
 		}
+
+	// Can't use until we are on clang 18 (currently on 17)
+	//	if constexpr (sizeof...(T) == 0)
+	//		std::println("\x1b[37m[TRACE {0}] CORE - {1}", CurrentTimeAndDate(), msg);
+	//	else
+	//	{
+	//		std::print("\x1b[37m[TRACE {0}] CORE - ", CurrentTimeAndDate());
+	//		std::vprint_nonunicode(std::cout, msg, std::make_format_args(std::forward<T>(args)...));
+	//		std::println("");
+	//	}
 	}
 	template<typename... T>
 	void CoreInfoImpl(std::string_view msg, T... args) noexcept
 	{
 		if constexpr (sizeof...(T) == 0)
-			std::println("\x1b[32m[INFO {0}] CORE - {1}", CurrentTimeAndDate(), msg);
+			std::cout << std::format("\x1b[32m[INFO {0}] CORE - {1}\n", CurrentTimeAndDate(), msg);
 		else
 		{
-			std::print("\x1b[32m[INFO {0}] CORE - ", CurrentTimeAndDate());
-			std::vprint_nonunicode(std::cout, msg, std::make_format_args(std::forward<T>(args)...));
-			std::println("");
+			std::cout << std::format("\x1b[32m[INFO {0}] CORE - ", CurrentTimeAndDate())
+				<< std::vformat(msg, std::make_format_args(std::forward<T>(args)...))
+				<< "\n";
 		}
+
+		// Can't use until we are on clang 18 (currently on 17)
+		//if constexpr (sizeof...(T) == 0)
+		//	std::println("\x1b[32m[INFO {0}] CORE - {1}", CurrentTimeAndDate(), msg);
+		//else
+		//{
+		//	std::print("\x1b[32m[INFO {0}] CORE - ", CurrentTimeAndDate());
+		//	std::vprint_nonunicode(std::cout, msg, std::make_format_args(std::forward<T>(args)...));
+		//	std::println("");
+		//}
 	}
 	template<typename... T>
 	void CoreWarnImpl(std::string_view msg, T... args) noexcept
 	{
 		if constexpr (sizeof...(T) == 0)
-			std::println("\x1b[33m[WARN {0}] CORE - {1}", CurrentTimeAndDate(), msg);
+			std::cout << std::format("\x1b[33m[WARN {0}] CORE - {1}\n", CurrentTimeAndDate(), msg);
 		else
 		{
-			std::print("\x1b[33m[WARN {0}] CORE - ", CurrentTimeAndDate());
-			std::vprint_nonunicode(std::cout, msg, std::make_format_args(std::forward<T>(args)...));
-			std::println("");
+			std::cout << std::format("\x1b[33m[WARN {0}] CORE - ", CurrentTimeAndDate())
+				<< std::vformat(msg, std::make_format_args(std::forward<T>(args)...))
+				<< "\n";
 		}
+
+		// Can't use until we are on clang 18 (currently on 17)
+		//if constexpr (sizeof...(T) == 0)
+		//	std::println("\x1b[33m[WARN {0}] CORE - {1}", CurrentTimeAndDate(), msg);
+		//else
+		//{
+		//	std::print("\x1b[33m[WARN {0}] CORE - ", CurrentTimeAndDate());
+		//	std::vprint_nonunicode(std::cout, msg, std::make_format_args(std::forward<T>(args)...));
+		//	std::println("");
+		//}
 	}
 	template<typename... T>
 	void CoreErrorImpl(std::string_view msg, T... args) noexcept
 	{
 		if constexpr (sizeof...(T) == 0)
-			std::println("\x1b[31m[ERROR {0}] CORE - {1}", CurrentTimeAndDate(), msg);
+			std::cout << std::format("\x1b[31m[ERROR {0}] CORE - {1}\n", CurrentTimeAndDate(), msg);
 		else
 		{
-			std::print("\x1b[31m[ERROR {0}] CORE - ", CurrentTimeAndDate());
-			std::vprint_nonunicode(std::cout, msg, std::make_format_args(std::forward<T>(args)...));
-			std::println("");
+			std::cout << std::format("\x1b[31m[ERROR {0}] CORE - ", CurrentTimeAndDate())
+				<< std::vformat(msg, std::make_format_args(std::forward<T>(args)...))
+				<< "\n";
 		}
+
+		// Can't use until we are on clang 18 (currently on 17)
+		//if constexpr (sizeof...(T) == 0)
+		//	std::println("\x1b[31m[ERROR {0}] CORE - {1}", CurrentTimeAndDate(), msg);
+		//else
+		//{
+		//	std::print("\x1b[31m[ERROR {0}] CORE - ", CurrentTimeAndDate());
+		//	std::vprint_nonunicode(std::cout, msg, std::make_format_args(std::forward<T>(args)...));
+		//	std::println("");
+		//}
 	}
 
 	template<typename... T>
 	void TraceImpl(std::string_view msg, T... args) noexcept
 	{
 		if constexpr (sizeof...(T) == 0)
-			std::println("\x1b[37m[TRACE {0}] {1}", CurrentTimeAndDate(), msg);
+			std::cout << std::format("\x1b[37m[TRACE {0}] CORE - {1}\n", CurrentTimeAndDate(), msg);
 		else
 		{
-			std::print("\x1b[37m[TRACE {0}] ", CurrentTimeAndDate());
-			std::vprint_nonunicode(std::cout, msg, std::make_format_args(std::forward<T>(args)...));
-			std::println("");
+			std::cout << std::format("\x1b[37m[TRACE {0}] CORE - ", CurrentTimeAndDate())
+				<< std::vformat(msg, std::make_format_args(std::forward<T>(args)...))
+				<< "\n";
 		}
+
+		// Can't use until we are on clang 18 (currently on 17)
+		//if constexpr (sizeof...(T) == 0)
+		//	std::println("\x1b[37m[TRACE {0}] {1}", CurrentTimeAndDate(), msg);
+		//else
+		//{
+		//	std::print("\x1b[37m[TRACE {0}] ", CurrentTimeAndDate());
+		//	std::vprint_nonunicode(std::cout, msg, std::make_format_args(std::forward<T>(args)...));
+		//	std::println("");
+		//}
 	}
 	template<typename... T>
 	void InfoImpl(std::string_view msg, T... args) noexcept
 	{
 		if constexpr (sizeof...(T) == 0)
-			std::println("\x1b[32m[INFO {0}] {1}", CurrentTimeAndDate(), msg);
+			std::cout << std::format("\x1b[32m[INFO {0}] {1}\n", CurrentTimeAndDate(), msg);
 		else
 		{
-			std::print("\x1b[32m[INFO {0}] ", CurrentTimeAndDate());
-			std::vprint_nonunicode(std::cout, msg, std::make_format_args(std::forward<T>(args)...));
-			std::println("");
+			std::cout << std::format("\x1b[32m[INFO {0}] ", CurrentTimeAndDate())
+				<< std::vformat(msg, std::make_format_args(std::forward<T>(args)...))
+				<< "\n";
 		}
+
+		// Can't use until we are on clang 18 (currently on 17)
+		//if constexpr (sizeof...(T) == 0)
+		//	std::println("\x1b[32m[INFO {0}] {1}", CurrentTimeAndDate(), msg);
+		//else
+		//{
+		//	std::print("\x1b[32m[INFO {0}] ", CurrentTimeAndDate());
+		//	std::vprint_nonunicode(std::cout, msg, std::make_format_args(std::forward<T>(args)...));
+		//	std::println("");
+		//}
 	}
 	template<typename... T>
 	void WarnImpl(std::string_view msg, T... args) noexcept
 	{
 		if constexpr (sizeof...(T) == 0)
-			std::println("\x1b[33m[WARN {0}] {1}", CurrentTimeAndDate(), msg);
+			std::cout << std::format("\x1b[33m[WARN {0}] {1}\n", CurrentTimeAndDate(), msg);
 		else
 		{
-			std::print("\x1b[33m[WARN {0}] ", CurrentTimeAndDate());
-			std::vprint_nonunicode(std::cout, msg, std::make_format_args(std::forward<T>(args)...));
-			std::println("");
+			std::cout << std::format("\x1b[33m[WARN {0}] ", CurrentTimeAndDate())
+				<< std::vformat(msg, std::make_format_args(std::forward<T>(args)...))
+				<< "\n";
 		}
+
+		// Can't use until we are on clang 18 (currently on 17)
+		//if constexpr (sizeof...(T) == 0)
+		//	std::println("\x1b[33m[WARN {0}] {1}", CurrentTimeAndDate(), msg);
+		//else
+		//{
+		//	std::print("\x1b[33m[WARN {0}] ", CurrentTimeAndDate());
+		//	std::vprint_nonunicode(std::cout, msg, std::make_format_args(std::forward<T>(args)...));
+		//	std::println("");
+		//}
 	}
 	template<typename... T>
 	void ErrorImpl(std::string_view msg, T... args) noexcept
 	{
 		if constexpr (sizeof...(T) == 0)
-			std::println("\x1b[31m[ERROR {0}] {1}", CurrentTimeAndDate(), msg);
+			std::cout << std::format("\x1b[31m[ERROR {0}] {1}\n", CurrentTimeAndDate(), msg);
 		else
 		{
-			std::print("\x1b[31m[ERROR {0}] ", CurrentTimeAndDate());
-			std::vprint_nonunicode(std::cout, msg, std::make_format_args(std::forward<T>(args)...));
-			std::println("");
+			std::cout << std::format("\x1b[31m[ERROR {0}] ", CurrentTimeAndDate())
+				<< std::vformat(msg, std::make_format_args(std::forward<T>(args)...))
+				<< "\n";
 		}
+
+		// Can't use until we are on clang 18 (currently on 17)
+		//if constexpr (sizeof...(T) == 0)
+		//	std::println("\x1b[31m[ERROR {0}] {1}", CurrentTimeAndDate(), msg);
+		//else
+		//{
+		//	std::print("\x1b[31m[ERROR {0}] ", CurrentTimeAndDate());
+		//	std::vprint_nonunicode(std::cout, msg, std::make_format_args(std::forward<T>(args)...));
+		//	std::println("");
+		//}
 	}
 };
 

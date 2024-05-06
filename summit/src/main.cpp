@@ -19,6 +19,9 @@ void work()
 //	LOG_WARN("Warn {0}", true);
 //	LOG_ERROR("Error - you suck");
 
+	LOG_TRACE("You suck!");
+	LOG_TRACE("Hi there {0}", 123);
+
 	std::string website = summit::Http::Get("http://www.example.com");
 	LOG_INFO("Website: {0}", website);
 
