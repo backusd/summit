@@ -178,10 +178,11 @@ Http::~Http()
 #endif
 }
 
-std::string Http::GetImpl(std::string_view url) const
+HttpResponse Http::GetImpl(std::string_view url) const
 {
-    std::string result;
-    result.reserve(10000);
+    HttpResponse response{};
+    response.StatusCode = 200;
+    response.Body.reserve(10000);
 
     std::string prefix(url.substr(0, 7));
     if (prefix.compare("http://") != 0)
@@ -286,22 +287,72 @@ std::string Http::GetImpl(std::string_view url) const
         remaining -= result;
     }
 
-    char buffer[10000];
+    // Use a static char buffer for holding the result data
+    // Make it thread local so that there is no issue making a GET request 
+    // from multiple threads
+    //static thread_local char buffer[10000];
+    static thread_local std::string buffer(10000, '\0');
 
     int nDataLength;
-    while ((nDataLength = recv(sock.Get(), buffer, 10000, 0)) > 0)
+    bool receivingBody = false;
+    std::string header;
+    size_t pos1;
+    size_t pos2;
+    std::string_view view;
+
+    // We are going to parse the header at the very end because we must make sure all the header data has
+    // been received before we can accurately parse it
+    while ((nDataLength = recv(sock.Get(), buffer.data(), 10000, 0)) > 0)
     {
-        // TODO: There has to be a better method here than push_back
-        for (int iii = 0; iii < nDataLength; ++iii)
-            result.push_back(buffer[iii]);
+        if (receivingBody)
+            response.Body.append(buffer.data(), nDataLength);
+        else
+        {
+            // Look for the beginning of the response body
+            pos1 = buffer.find("\r\n\r\n");
+            if (pos1 == std::string::npos)
+            {
+                pos1 = buffer.find("\n\n");
+                if (pos1 == std::string::npos)
+                {
+                    // Have not found response body beginning, so copy all data to the 
+                    // header string and continue
+                    header.append(buffer.data(), nDataLength);
+                    continue;
+                }
+                pos2 = pos1 + 2;
+            }
+            else
+                pos2 = pos1 + 4;
+
+            // Copy the header data and body data to respective variables
+            header.append(buffer.data(), pos2);
+            response.Body.append(&buffer.data()[pos2], nDataLength - pos2);
+            receivingBody = true;
+        }
     }
+
+    // Now that all the data is received, we can safely parse the header data 
+    // Process the first line - make sure we see "HTTP/1.1"
+    pos1 = header.find("HTTP");
+    view = std::string_view(&header.data()[pos1], 8);
+    if (view.compare("HTTP/1.1") != 0)
+        throw EXCEPTION(std::format("Response contained header '{0}' - Expected 'HTTP/1.1'", view));
+
+    // Parse the response status code
+    pos1 = header.find_first_not_of(' ', pos1 + 8);
+    pos2 = header.find(' ', pos1 + 1);
+    view = std::string_view(&header.data()[pos1], pos2 - pos1);
+    char tmp = header[pos2]; // Need to make sure the string we pass to atoi is null terminated, but then we need to return its value
+    header[pos2] = '\0';
+    response.StatusCode = atoi(view.data());
+    header[pos2] = tmp;
 
     // NOTE: We are throwing exceptions above and not calling these functions - implement RAII
     freeaddrinfo(addrInfo);
 
 #endif
-    return result;
+    return response;
 }
-
 
 }

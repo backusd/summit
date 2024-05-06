@@ -22,8 +22,8 @@ void work()
 	LOG_TRACE("You suck!");
 	LOG_TRACE("Hi there {0}", 123);
 
-	std::string website = summit::Http::Get("http://www.example.com");
-	LOG_INFO("Website: {0}", website);
+	summit::HttpResponse response = summit::Http::Get("http://www.google.com");
+	LOG_INFO("Website:\nStatus: {0}\nBody: {1}", response.StatusCode, response.Body);
 
 }
 

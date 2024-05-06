@@ -47,10 +47,16 @@ private:
 #endif
 };
 
+struct HttpResponse
+{
+	unsigned int StatusCode;
+	std::string Body;
+};
+
 class Http
 {
 public:
-	ND static inline std::string Get(std::string_view url) { return Instance().GetImpl(url); }
+	ND static inline HttpResponse Get(std::string_view url) { return Instance().GetImpl(url); }
 
 private:
 	static inline Http& Instance()
@@ -66,7 +72,9 @@ private:
 	~Http();
 
 
-	ND std::string GetImpl(std::string_view url) const;
+	ND HttpResponse GetImpl(std::string_view url) const;
+
+
 };
 }
 
