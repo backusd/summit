@@ -11,12 +11,12 @@ class Logger
 public:
 	template<typename... T>
 	static void CoreTrace(std::string_view msg, T... args) noexcept { Get().CoreTraceImpl(msg, std::forward<T>(args)...); }
-	template<typename... T>
-	static void CoreInfo(std::string_view msg, T... args) noexcept { Get().CoreInfoImpl(msg, std::forward<T>(args)...); }
-	template<typename... T>
-	static void CoreWarn(std::string_view msg, T... args) noexcept { Get().CoreWarnImpl(msg, std::forward<T>(args)...); }
-	template<typename... T>
-	static void CoreError(std::string_view msg, T... args) noexcept { Get().CoreErrorImpl(msg, std::forward<T>(args)...); }
+//	template<typename... T>
+//	static void CoreInfo(std::string_view msg, T... args) noexcept { Get().CoreInfoImpl(msg, std::forward<T>(args)...); }
+//	template<typename... T>
+//	static void CoreWarn(std::string_view msg, T... args) noexcept { Get().CoreWarnImpl(msg, std::forward<T>(args)...); }
+//	template<typename... T>
+//	static void CoreError(std::string_view msg, T... args) noexcept { Get().CoreErrorImpl(msg, std::forward<T>(args)...); }
 
 //	template<typename... T>
 //	static void Trace(std::string_view msg, T... args) noexcept { Get().TraceImpl(msg, std::forward<T>(args)...); }
@@ -59,11 +59,14 @@ private:
 			std::println("\x1b[37m[TRACE {0}] CORE - {1}", CurrentTimeAndDate(), msg);
 		else
 		{
+			auto fmt_args = std::make_format_args(std::forward<T>(args)...);
 			std::print("\x1b[37m[TRACE {0}] CORE - ", CurrentTimeAndDate());
-			std::vprint_nonunicode(std::cout, msg, std::make_format_args(std::forward<T>(args)...));
+			std::vprint_nonunicode(std::cout, msg, fmt_args);
 			std::println("");
 		}
 	}
+
+	/*
 	template<typename... T>
 	void CoreInfoImpl(std::string_view msg, T... args) noexcept
 	{
@@ -130,7 +133,7 @@ private:
 			std::println("");
 		}
 	}
-
+	*/
 	/*
 	template<typename... T>
 	void TraceImpl(std::string_view msg, T... args) noexcept
@@ -238,7 +241,8 @@ private:
 #define LOG_TRACE(...) ::summit::Logger::CoreTrace(__VA_ARGS__)
 #define LOG_INFO(...) ::summit::Logger::CoreInfo(__VA_ARGS__)
 #define LOG_WARN(...) ::summit::Logger::CoreWarn(__VA_ARGS__)
-#define LOG_ERROR(...) ::summit::Logger::CoreError(__VA_ARGS__)
+//#define LOG_ERROR(...) ::summit::Logger::CoreError(__VA_ARGS__)
+#define LOG_ERROR(...)
 
 #else // If building the client application, use basic logging
 
