@@ -3,6 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "summit", "summit\summit.vcxproj", "{041BA31C-F0BC-CDF2-D977-E146C5B85443}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "curl", "summit\vendor\curl\curl.vcxproj", "{DB59957C-C790-960D-707D-7C105C93120F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "curlpp", "summit\vendor\curlpp\curlpp.vcxproj", "{7B4B53F7-67ED-7DCD-50A8-91213CE9041E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mbedtls", "summit\vendor\mbedtls\mbedtls.vcxproj", "{D08541B6-3C65-C051-457D-4B28B1DB26B3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlib", "summit\vendor\zlib\zlib.vcxproj", "{16CFA17C-0206-A30D-ABF2-881097081F0F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -16,6 +24,30 @@ Global
 		{041BA31C-F0BC-CDF2-D977-E146C5B85443}.Dist|x64.Build.0 = Dist|x64
 		{041BA31C-F0BC-CDF2-D977-E146C5B85443}.Release|x64.ActiveCfg = Release|x64
 		{041BA31C-F0BC-CDF2-D977-E146C5B85443}.Release|x64.Build.0 = Release|x64
+		{DB59957C-C790-960D-707D-7C105C93120F}.Debug|x64.ActiveCfg = Debug|x64
+		{DB59957C-C790-960D-707D-7C105C93120F}.Debug|x64.Build.0 = Debug|x64
+		{DB59957C-C790-960D-707D-7C105C93120F}.Dist|x64.ActiveCfg = Dist|x64
+		{DB59957C-C790-960D-707D-7C105C93120F}.Dist|x64.Build.0 = Dist|x64
+		{DB59957C-C790-960D-707D-7C105C93120F}.Release|x64.ActiveCfg = Release|x64
+		{DB59957C-C790-960D-707D-7C105C93120F}.Release|x64.Build.0 = Release|x64
+		{7B4B53F7-67ED-7DCD-50A8-91213CE9041E}.Debug|x64.ActiveCfg = Debug|x64
+		{7B4B53F7-67ED-7DCD-50A8-91213CE9041E}.Debug|x64.Build.0 = Debug|x64
+		{7B4B53F7-67ED-7DCD-50A8-91213CE9041E}.Dist|x64.ActiveCfg = Dist|x64
+		{7B4B53F7-67ED-7DCD-50A8-91213CE9041E}.Dist|x64.Build.0 = Dist|x64
+		{7B4B53F7-67ED-7DCD-50A8-91213CE9041E}.Release|x64.ActiveCfg = Release|x64
+		{7B4B53F7-67ED-7DCD-50A8-91213CE9041E}.Release|x64.Build.0 = Release|x64
+		{D08541B6-3C65-C051-457D-4B28B1DB26B3}.Debug|x64.ActiveCfg = Debug|x64
+		{D08541B6-3C65-C051-457D-4B28B1DB26B3}.Debug|x64.Build.0 = Debug|x64
+		{D08541B6-3C65-C051-457D-4B28B1DB26B3}.Dist|x64.ActiveCfg = Dist|x64
+		{D08541B6-3C65-C051-457D-4B28B1DB26B3}.Dist|x64.Build.0 = Dist|x64
+		{D08541B6-3C65-C051-457D-4B28B1DB26B3}.Release|x64.ActiveCfg = Release|x64
+		{D08541B6-3C65-C051-457D-4B28B1DB26B3}.Release|x64.Build.0 = Release|x64
+		{16CFA17C-0206-A30D-ABF2-881097081F0F}.Debug|x64.ActiveCfg = Debug|x64
+		{16CFA17C-0206-A30D-ABF2-881097081F0F}.Debug|x64.Build.0 = Debug|x64
+		{16CFA17C-0206-A30D-ABF2-881097081F0F}.Dist|x64.ActiveCfg = Dist|x64
+		{16CFA17C-0206-A30D-ABF2-881097081F0F}.Dist|x64.Build.0 = Dist|x64
+		{16CFA17C-0206-A30D-ABF2-881097081F0F}.Release|x64.ActiveCfg = Release|x64
+		{16CFA17C-0206-A30D-ABF2-881097081F0F}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

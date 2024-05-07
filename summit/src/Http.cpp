@@ -1,10 +1,9 @@
 #include "pch.h"
 #include "Http.h"
 #include "Logger.h"
-#include "SummitException.h"
 #include "utils/String.h"
 
-
+/*
 namespace summit
 {
 #ifdef SUMMIT_PLATFORM_WINDOWS
@@ -110,6 +109,49 @@ void PrintAddrInfoDetails(addrinfo* addrInfo) noexcept
 #endif
 
 // ==========================================================================================
+// HttpRequest
+HttpRequest::HttpRequest(std::string_view url, RequestType type, ConnectionType connection, HttpVersion version) :
+    Type(type), Connection(connection), Version(version)
+{
+    unsigned int httpCharsCount = 0;
+    std::string_view view(url.data(), 8);
+    if (view.compare("https://") == 0)
+    {
+        //throw EXCEPTION(std::format("Cannot retrieve URL '{0}' - no support for https yet", url)); 
+        httpCharsCount = 8;
+        HttpStr = "https";
+    }
+    else
+    {
+        view = std::string_view(url.data(), 7);
+        if (view.compare("http://") == 0)
+        {
+            //throw EXCEPTION(std::format("Invalid URL '{0}' - Must start with 'http://'", url));
+            httpCharsCount = 7;
+            HttpStr = "http";
+        }
+        else
+        {
+            LOG_WARN("Could not find 'http://' or 'https://' at beginning of url: {0}", url);
+            LOG_WARN("Assuming it is okay to use https...");
+            HttpStr = "https";
+        }
+    }
+
+    size_t endOfHost = url.find('/', httpCharsCount);
+    if (endOfHost == std::string::npos)
+    {
+        Host = url.substr(httpCharsCount, url.length() - httpCharsCount);
+        Target = "/";
+    }
+    else
+    {
+        Host   = url.substr(httpCharsCount, endOfHost - httpCharsCount); // Do not include 'http[s]://' in the host name 
+        Target = url.substr(endOfHost, url.size()); 
+    }
+}
+
+// ==========================================================================================
 // Socket
 Socket::Socket(Socket::Type type, Protocol protocol) :
     m_socket{}
@@ -140,13 +182,30 @@ Socket::Socket(Socket::Type type, Protocol protocol) :
     m_socket = socket(_af, _type, _protocol);
 #endif
 }
-
 Socket::~Socket()
 {
 #ifdef SUMMIT_PLATFORM_WINDOWS
     closesocket(m_socket);
 #endif
 }
+void Socket::SendRequest(const HttpRequest& request) const
+{
+#ifdef SUMMIT_PLATFORM_WINDOWS
+    std::string requestStr = request.Get();
+    size_t sent = 0;
+    int remaining = static_cast<int>(requestStr.size()); 
+    while (remaining > 0)
+    {
+        const char* data = requestStr.c_str() + sent; 
+        auto result = send(m_socket, data, remaining, 0); 
+        if (result == SOCKET_ERROR)
+            throw EXCEPTION(std::format("Failed to send request: {0}.\r\nWSAGetLastError: {1}", request, WSAGetLastError()));
+        sent += result;
+        remaining -= result;
+    }
+#endif
+}
+
 
 // ==========================================================================================
 // Http
@@ -184,21 +243,8 @@ HttpResponse Http::GetImpl(std::string_view url) const
     response.StatusCode = 200;
     response.Body.reserve(10000);
 
-    std::string prefix(url.substr(0, 7));
-    if (prefix.compare("http://") != 0)
-        throw EXCEPTION(std::format("Invalid URL '{0}' - Must start with 'http://'", url));
-
-    size_t dotcomOffset = url.find(".com") + 4;
-    std::string host(url.substr(7, dotcomOffset - 7)); // Do not include 'http://' in the host name
-    std::string_view path = (url.size() == dotcomOffset) ? "/" : url.substr(dotcomOffset, url.size());
-    std::string request = std::format(
-        "GET {0} HTTP/1.1\r\n"
-        "Connection: close\r\n"
-        "Host: {1}\r\n"
-        "\r\n",
-        path, host);
-
-    LOG_INFO("Request: {0}", request);
+    HttpRequest httpRequest(url);
+    std::string request = httpRequest.Get();
 
 #ifdef SUMMIT_PLATFORM_WINDOWS
     //--------------------------------
@@ -216,7 +262,7 @@ HttpResponse Http::GetImpl(std::string_view url) const
     // of addrinfo structures containing response
     // information
     struct addrinfo* addrInfo = NULL;
-    DWORD dwRetval = getaddrinfo(host.c_str(), "http", &hints, &addrInfo);  
+    DWORD dwRetval = getaddrinfo(httpRequest.Host.c_str(), httpRequest.HttpStr.c_str(), &hints, &addrInfo);
     if (dwRetval != 0)
         throw EXCEPTION(std::format("getaddrinfo failed for URL '{0}' with error: {1}", url, dwRetval));
 
@@ -275,17 +321,10 @@ HttpResponse Http::GetImpl(std::string_view url) const
     if (connect(sock.Get(), sockaddr_ipv4, sizeof(sockaddr_in)) != 0)
         throw EXCEPTION(std::format("Failed to connect to: {0}.\r\nWSAGetLastError: {1}", url, WSAGetLastError()));
 
-    size_t sent = 0;
-    int remaining = static_cast<int>(request.size());
-    while (remaining > 0)
-    {
-        const char* data = request.c_str() + sent;
-        auto result = send(sock.Get(), data, remaining, 0);
-        if (result == SOCKET_ERROR)
-            throw EXCEPTION(std::format("Failed to send all data to: {0}.\r\nWSAGetLastError: {1}", url, WSAGetLastError()));
-        sent += result;
-        remaining -= result;
-    }
+    // TODO: We are throwing exceptions above and not calling these functions - implement RAII
+    freeaddrinfo(addrInfo);
+
+    sock.SendRequest(httpRequest);
 
     // Use a static char buffer for holding the result data
     // Make it thread local so that there is no issue making a GET request 
@@ -332,6 +371,8 @@ HttpResponse Http::GetImpl(std::string_view url) const
         }
     }
 
+    LOG_TRACE("HEAD: {0}", header);
+
     // Now that all the data is received, we can safely parse the header data 
     // Process the first line - make sure we see "HTTP/1.1"
     pos1 = header.find("HTTP");
@@ -348,11 +389,46 @@ HttpResponse Http::GetImpl(std::string_view url) const
     response.StatusCode = atoi(view.data());
     header[pos2] = tmp;
 
-    // NOTE: We are throwing exceptions above and not calling these functions - implement RAII
-    freeaddrinfo(addrInfo);
+    // If getting a redirect, just follow it immediately
+    if (response.StatusCode == 308)
+    {
+        pos1 = header.find("\nLocation:");
+        if (pos1 == std::string::npos)
+        {
+            LOG_WARN("Received response status 308, but redirect location could not be determined for url: {0}", url);
+            LOG_WARN("Skipping redirect and immediately returning 308 response");
+        }
+        else
+        {
+            pos1 = header.find_first_not_of(" \t", pos1 + 10);
+            if (pos1 == std::string::npos)
+            {
+                LOG_WARN("Received response status 308 - found 'Location' but could not determine value for url: {0}", url);
+                LOG_WARN("Skipping redirect and immediately returning 308 response");
+            }
+            else
+            {
+                pos2 = header.find_first_of("\r\n", pos1);
+                if (pos2 == std::string::npos)
+                    pos2 = header.size();
+
+                std::string_view redirectURL(&header[pos1], pos2 - pos1);
+
+                if (redirectURL.compare(url) == 0)
+                {
+                    LOG_WARN("Received response 308 for redirect, but the redirect location was the exact same");
+                    LOG_WARN("Skipping redirect for url: {0}", url);
+                }
+                else
+                    response = GetImpl(redirectURL);                
+            }
+        }
+    }
 
 #endif
     return response;
 }
 
 }
+
+*/

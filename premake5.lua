@@ -12,6 +12,11 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 startproject "summit"
 
+include "summit/vendor/zlib"
+include "summit/vendor/mbedtls"
+include "summit/vendor/curl"
+include "summit/vendor/curlpp"
+
 project "summit"
 	location "summit"
 	kind "ConsoleApp"
@@ -33,7 +38,17 @@ project "summit"
 
 	includedirs
 	{
-		"%{prj.name}/src"
+		"%{prj.name}/src",
+		"%{prj.name}/vendor/zlib",
+		"%{prj.name}/vendor/mbedtls/include",
+		"%{prj.name}/vendor/curl/include",
+		"%{prj.name}/vendor/curl/lib",
+		"%{prj.name}/vendor/curlpp/include"
+	}
+
+	links
+	{
+		"curlpp"
 	}
 
 	defines
@@ -48,12 +63,14 @@ project "summit"
 		{
 			"SUMMIT_PLATFORM_WINDOWS"
 		}
+		links { "ws2_32.lib" }
 
 	filter "configurations:Debug"
 		defines 
 		{
 			"SUMMIT_DEBUG",
-			"SUMMIT_ENABLE_ASSERTS"
+			"SUMMIT_ENABLE_ASSERTS",
+			"DEBUGBUILD"
 		}
 		symbols "on"
 
