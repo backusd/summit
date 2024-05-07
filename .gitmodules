@@ -1,0 +1,12 @@
+[submodule "summit/vendor/curlpp"]
+	path = summit/vendor/curlpp
+	url = https://github.com/backusd/curlpp
+[submodule "summit/vendor/zlib"]
+	path = summit/vendor/zlib
+	url = https://github.com/backusd/zlib
+[submodule "summit/vendor/curl"]
+	path = summit/vendor/curl
+	url = https://github.com/backusd/curl
+[submodule "summit/vendor/mbedtls"]
+	path = summit/vendor/mbedtls
+	url = https://github.com/backusd/mbedtls
