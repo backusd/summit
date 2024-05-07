@@ -89,14 +89,14 @@ private:
 	template<typename... T>
 	void CoreWarnImpl(std::string_view msg, T... args) noexcept
 	{
-		if constexpr (sizeof...(T) == 0)
-			std::cout << std::format("\x1b[33m[WARN {0}] CORE - {1}\n", CurrentTimeAndDate(), msg);
-		else
-		{
-			std::cout << std::format("\x1b[33m[WARN {0}] CORE - ", CurrentTimeAndDate())
-				<< std::vformat(msg, std::make_format_args(std::forward<T>(args)...))
-				<< "\n";
-		}
+	//	if constexpr (sizeof...(T) == 0)
+	//		std::cout << std::format("\x1b[33m[WARN {0}] CORE - {1}\n", CurrentTimeAndDate(), msg);
+	//	else
+	//	{
+	//		std::cout << std::format("\x1b[33m[WARN {0}] CORE - ", CurrentTimeAndDate())
+	//			<< std::vformat(msg, std::make_format_args(std::forward<T>(args)...))
+	//			<< "\n";
+	//	}
 
 		// Can't use until we are on clang 18 (currently on 17)
 		if constexpr (sizeof...(T) == 0)
@@ -111,14 +111,14 @@ private:
 	template<typename... T>
 	void CoreErrorImpl(std::string_view msg, T... args) noexcept
 	{
-		if constexpr (sizeof...(T) == 0)
-			std::cout << std::format("\x1b[31m[ERROR {0}] CORE - {1}\n", CurrentTimeAndDate(), msg);
-		else
-		{
-			std::cout << std::format("\x1b[31m[ERROR {0}] CORE - ", CurrentTimeAndDate())
-				<< std::vformat(msg, std::make_format_args(std::forward<T>(args)...))
-				<< "\n";
-		}
+	//	if constexpr (sizeof...(T) == 0)
+	//		std::cout << std::format("\x1b[31m[ERROR {0}] CORE - {1}\n", CurrentTimeAndDate(), msg);
+	//	else
+	//	{
+	//		std::cout << std::format("\x1b[31m[ERROR {0}] CORE - ", CurrentTimeAndDate())
+	//			<< std::vformat(msg, std::make_format_args(std::forward<T>(args)...))
+	//			<< "\n";
+	//	}
 
 		// Can't use until we are on clang 18 (currently on 17)
 		if constexpr (sizeof...(T) == 0)
