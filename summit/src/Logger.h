@@ -43,7 +43,7 @@ private:
 	ND static std::string CurrentTimeAndDate() noexcept;
 
 	template<typename... T>
-	void CoreTraceImpl(std::string_view msg, T... args) noexcept
+	void CoreTraceImpl(std::string_view msg, T&&... args) noexcept
 	{
 	//	if constexpr (sizeof...(T) == 0)
 	//		std::cout << std::format("\x1b[37m[TRACE {0}] CORE - {1}\n", CurrentTimeAndDate(), msg);
@@ -59,7 +59,7 @@ private:
 			std::println("\x1b[37m[TRACE {0}] CORE - {1}", CurrentTimeAndDate(), msg);
 		else
 		{
-			auto fmt_args = std::make_format_args(std::forward<T>(args)...);
+			auto fmt_args = std::make_format_args(args...);
 			std::print("\x1b[37m[TRACE {0}] CORE - ", CurrentTimeAndDate());
 			std::vprint_nonunicode(std::cout, msg, fmt_args);
 			std::println("");
