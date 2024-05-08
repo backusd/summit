@@ -59,10 +59,10 @@ private:
 	void CoreInfoImpl(std::string_view msg, T... args) noexcept
 	{
 		if constexpr (sizeof...(T) == 0)
-			std::println("\x1b[32m[INFO {0}] CORE - {1}", CurrentTimeAndDate(), msg);
+			std::println("\x1b[32m[INFO  {0}] CORE - {1}", CurrentTimeAndDate(), msg);
 		else
 		{
-			std::print("\x1b[32m[INFO {0}] CORE - ", CurrentTimeAndDate());
+			std::print("\x1b[32m[INFO  {0}] CORE - ", CurrentTimeAndDate());
 			std::vprint_nonunicode(std::cout, msg, std::make_format_args(args...));
 			std::println("");
 		}
@@ -71,10 +71,10 @@ private:
 	void CoreWarnImpl(std::string_view msg, T... args) noexcept
 	{
 		if constexpr (sizeof...(T) == 0)
-			std::println("\x1b[33m[WARN {0}] CORE - {1}", CurrentTimeAndDate(), msg);
+			std::println("\x1b[33m[WARN  {0}] CORE - {1}", CurrentTimeAndDate(), msg);
 		else
 		{
-			std::print("\x1b[33m[WARN {0}] CORE - ", CurrentTimeAndDate());
+			std::print("\x1b[33m[WARN  {0}] CORE - ", CurrentTimeAndDate());
 			std::vprint_nonunicode(std::cout, msg, std::make_format_args(args...));
 			std::println("");
 		}
@@ -108,10 +108,10 @@ private:
 	void InfoImpl(std::string_view msg, T... args) noexcept
 	{
 		if constexpr (sizeof...(T) == 0)
-			std::println("\x1b[32m[INFO {0}] {1}", CurrentTimeAndDate(), msg);
+			std::println("\x1b[32m[INFO  {0}] {1}", CurrentTimeAndDate(), msg);
 		else
 		{
-			std::print("\x1b[32m[INFO {0}] ", CurrentTimeAndDate());
+			std::print("\x1b[32m[INFO  {0}] ", CurrentTimeAndDate());
 			std::vprint_nonunicode(std::cout, msg, std::make_format_args(args...));
 			std::println("");
 		}
@@ -120,10 +120,10 @@ private:
 	void WarnImpl(std::string_view msg, T... args) noexcept
 	{
 		if constexpr (sizeof...(T) == 0)
-			std::println("\x1b[33m[WARN {0}] {1}", CurrentTimeAndDate(), msg);
+			std::println("\x1b[33m[WARN  {0}] {1}", CurrentTimeAndDate(), msg);
 		else
 		{
-			std::print("\x1b[33m[WARN {0}] ", CurrentTimeAndDate());
+			std::print("\x1b[33m[WARN  {0}] ", CurrentTimeAndDate());
 			std::vprint_nonunicode(std::cout, msg, std::make_format_args(args...));
 			std::println("");
 		}

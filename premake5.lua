@@ -43,7 +43,8 @@ project "summit"
 		"%{prj.name}/vendor/mbedtls/include",
 		"%{prj.name}/vendor/curl/include",
 		"%{prj.name}/vendor/curl/lib",
-		"%{prj.name}/vendor/curlpp/include"
+		"%{prj.name}/vendor/curlpp/include",
+		"%{prj.name}/vendor/json"
 	}
 
 	links
