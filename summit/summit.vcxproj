@@ -79,7 +79,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>SUMMIT_CORE;SUMMIT_PLATFORM_WINDOWS;SUMMIT_DEBUG;SUMMIT_ENABLE_ASSERTS;DEBUGBUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SUMMIT_CORE;CURL_STATICLIB;SUMMIT_PLATFORM_WINDOWS;SUMMIT_DEBUG;SUMMIT_ENABLE_ASSERTS;DEBUGBUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\zlib;vendor\mbedtls\include;vendor\curl\include;vendor\curl\lib;vendor\curlpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -98,7 +98,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>SUMMIT_CORE;SUMMIT_PLATFORM_WINDOWS;SUMMIT_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SUMMIT_CORE;CURL_STATICLIB;SUMMIT_PLATFORM_WINDOWS;SUMMIT_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\zlib;vendor\mbedtls\include;vendor\curl\include;vendor\curl\lib;vendor\curlpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -121,7 +121,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>SUMMIT_CORE;SUMMIT_PLATFORM_WINDOWS;SUMMIT_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SUMMIT_CORE;CURL_STATICLIB;SUMMIT_PLATFORM_WINDOWS;SUMMIT_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\zlib;vendor\mbedtls\include;vendor\curl\include;vendor\curl\lib;vendor\curlpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>

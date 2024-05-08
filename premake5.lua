@@ -53,7 +53,8 @@ project "summit"
 
 	defines
 	{
-		"SUMMIT_CORE"
+		"SUMMIT_CORE",
+		"CURL_STATICLIB"
 	}
 
 	filter "system:windows"
