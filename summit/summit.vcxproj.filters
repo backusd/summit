@@ -17,6 +17,8 @@
     <ClInclude Include="src\utils\String.h">
       <Filter>utils</Filter>
     </ClInclude>
+    <ClInclude Include="src\PolygonAPI.h" />
+    <ClInclude Include="src\Data.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Http.cpp" />
@@ -27,5 +29,7 @@
     <ClCompile Include="src\utils\String.cpp">
       <Filter>utils</Filter>
     </ClCompile>
+    <ClCompile Include="src\PolygonAPI.cpp" />
+    <ClCompile Include="src\Data.cpp" />
   </ItemGroup>
 </Project>

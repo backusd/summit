@@ -141,16 +141,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Core.h" />
+    <ClInclude Include="src\Data.h" />
     <ClInclude Include="src\Http.h" />
     <ClInclude Include="src\Logger.h" />
+    <ClInclude Include="src\PolygonAPI.h" />
     <ClInclude Include="src\SummitException.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\utils\Concepts.h" />
     <ClInclude Include="src\utils\String.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Data.cpp" />
     <ClCompile Include="src\Http.cpp" />
     <ClCompile Include="src\Logger.cpp" />
+    <ClCompile Include="src\PolygonAPI.cpp" />
     <ClCompile Include="src\SummitException.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\pch.cpp">
